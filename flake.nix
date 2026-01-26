@@ -11,6 +11,11 @@
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       perSystem = { pkgs, ... }: {
         formatter = pkgs.alejandra;
+        packages.default = pkgs.opencode;
+        apps.default = {
+          type = "app";
+          program = "${pkgs.opencode}/bin/opencode";
+        };
       };
       flake = {
         homeManagerModules = {

@@ -38,6 +38,48 @@ in {
     };
     settings = {
       autoshare = false;
+      model = cfg.model;
+      small_model = cfg.small_model;
+      watcher.ignore = [
+        "**/node_modules/**"
+        "**/.git/**"
+        "**/.hg/**"
+        "**/.svn/**"
+        "**/.DS_Store"
+        "**/dist/**"
+        "**/build/**"
+        "**/.next/**"
+        "**/out/**"
+        "**/vendor/**"
+      ];
+      plugin = [
+        "opencode-pty@latest"
+        "opencode-antigravity-auth@latest"
+        "@tarquinen/opencode-dcp@latest"
+        "opencode-websearch-cited@latest"
+        "@mohak34/opencode-notifier@latest"
+        "@zenobius/opencode-skillful@latest"
+        "@nick-vi/opencode-type-inject@latest"
+        "@different-ai/opencode-browser@latest"
+      ];
+      mcp = {
+        context7 = {
+          type = "remote";
+          url = "https://mcp.context7.com/mcp";
+        };
+        gh_grep = {
+          type = "remote";
+          url = "https://mcp.grep.app";
+        };
+        saloon = {
+          type = "remote";
+          url = "https://docs.saloon.dev/~gitbook/mcp";
+        };
+        github = {
+          type = "remote";
+          url = "https://api.githubcopilot.com/mcp";
+        };
+      };
       provider = {
         anthropic.options.setCacheKey = true;
         google.models = {
@@ -188,44 +230,6 @@ in {
           };
         };
       };
-      model = cfg.model;
-      small_model = cfg.small_model;
-      watcher.ignore = [
-        "**/node_modules/**"
-        "**/.git/**"
-        "**/.hg/**"
-        "**/.svn/**"
-        "**/.DS_Store"
-        "**/dist/**"
-        "**/build/**"
-        "**/.next/**"
-        "**/out/**"
-        "**/vendor/**"
-      ];
-      mcp = {
-        context7 = {
-          type = "remote";
-          url = "https://mcp.context7.com/mcp";
-        };
-        gh_grep = {
-          type = "remote";
-          url = "https://mcp.grep.app";
-        };
-        github = {
-          type = "remote";
-          url = "https://api.githubcopilot.com/mcp";
-        };
-      };
-      plugin = [
-        "opencode-pty@latest"
-        "opencode-antigravity-auth@latest"
-        "@tarquinen/opencode-dcp@latest"
-        "opencode-websearch-cited@latest"
-        "@mohak34/opencode-notifier@latest"
-        "@zenobius/opencode-skillful@latest"
-        "@nick-vi/opencode-type-inject@latest"
-        "@different-ai/opencode-browser@latest"
-      ];
     };
     rules = ''
       ## External File Loading

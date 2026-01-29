@@ -12,13 +12,13 @@ in {
   options.modules.${namespace}.${name} = {
     enable = mkEnableOption (mdDoc name);
     model = mkOption {
-      type = types.str;
-      default = "google/antigravity-gemini-3-pro";
+      type = types.nullOr types.str;
+      default = null;
       description = mdDoc "The model to use for opencode.";
     };
     small_model = mkOption {
-      type = types.str;
-      default = "google/antigravity-gemini-3-flash";
+      type = types.nullOr types.str;
+      default = null;
       description = mdDoc "The small model to use for opencode.";
     };
   };
@@ -232,6 +232,33 @@ in {
       };
     };
     rules = ''
+      ## Output Control
+
+      CRITICAL: Keep responses concise and actionable. Minimize verbosity.
+
+      ### Build Mode
+      When implementing code changes or building features:
+      - Provide brief confirmation when tasks complete successfully (e.g., "Done" or "Created X, updated Y")
+      - Do NOT generate detailed change reports unless explicitly requested
+      - Do NOT create report files or summaries automatically
+      - Do NOT list all modifications made - the user can see the changes
+      - Only provide detailed explanations when errors occur or when asked
+
+      ### Plan Mode
+      When creating or iterating on plans:
+      - Present plans concisely with clear action items
+      - After incorporating feedback, acknowledge changes briefly (e.g., "Updated plan with X")
+      - Do NOT output diffs of plan changes
+      - Do NOT include code snippets unless specifically requested
+      - Do NOT explain every detail of what will change - just update the plan
+      - Keep iterations minimal - revise and move forward
+
+      ### General Communication
+      - Answer questions directly without preamble
+      - Confirm completions in one line when possible
+      - Reserve detailed explanations for errors or explicit requests
+      - Focus on what the user needs to know, not what you did
+
       ## External File Loading
 
       CRITICAL: When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.

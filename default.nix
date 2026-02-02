@@ -38,8 +38,8 @@ in {
     };
     settings = {
       autoshare = false;
-      model = cfg.model;
-      small_model = cfg.small_model;
+      model = mkIf (cfg.model != null) cfg.model;
+      small_model = mkIf (cfg.small_model != null) cfg.small_model;
       watcher.ignore = [
         "**/node_modules/**"
         "**/.git/**"

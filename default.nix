@@ -26,13 +26,14 @@ in {
   config.programs.opencode = mkIf cfg.enable {
     enable = true;
     enableMcpIntegration = true;
-    agents = {
-      ask = ./agents/ask.md;
-      debug = ./agents/debug.md;
-      review = ./agents/review.md;
-      security = ./agents/security.md;
-      documentation = ./agents/documentation.md;
-    };
+      agents = {
+        ask = ./agents/ask.md;
+        debug = ./agents/debug.md;
+        review = ./agents/review.md;
+        security = ./agents/security.md;
+        documentation = ./agents/documentation.md;
+        assessment-review = ./agents/assessment-review.md;
+      };
     skills = {
       browser-automation = ./skills/browser-automation.md;
     };

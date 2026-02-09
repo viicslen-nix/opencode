@@ -12,13 +12,13 @@ in {
   # Define the configuration options for this module
   options.modules.${namespace}.${name} = {
     enable = mkEnableOption (mdDoc name);
-    
+
     model = mkOption {
       type = types.nullOr types.str;
       default = null;
       description = mdDoc "The model to use for opencode.";
     };
-    
+
     small_model = mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -30,29 +30,29 @@ in {
   config.programs.opencode = mkIf cfg.enable {
     enable = true;
     enableMcpIntegration = true;
-    
+
     # Configure available agents from local markdown files
-      agents = {
-        ask = ./agents/ask.md;
-        debug = ./agents/debug.md;
-        review = ./agents/review.md;
-        security = ./agents/security.md;
-        documentation = ./agents/documentation.md;
-        assessment-review = ./agents/assessment-review.md;
-      };
-      
+    agents = {
+      ask = ./agents/ask.md;
+      debug = ./agents/debug.md;
+      review = ./agents/review.md;
+      security = ./agents/security.md;
+      documentation = ./agents/documentation.md;
+      assessment-review = ./agents/assessment-review.md;
+    };
+
     # Configure available skills
     skills = {
       browser-automation = ./skills/browser-automation.md;
     };
-    
+
     # Main Opencode settings
     settings = {
       autoshare = false;
       # Use configured models if provided
       model = mkIf (cfg.model != null) cfg.model;
       small_model = mkIf (cfg.small_model != null) cfg.small_model;
-      
+
       # File patterns to ignore
       watcher.ignore = [
         "**/node_modules/**"
@@ -66,7 +66,7 @@ in {
         "**/out/**"
         "**/vendor/**"
       ];
-      
+
       # Installed plugins
       plugin = [
         "opencode-pty@latest"
@@ -78,7 +78,7 @@ in {
         "@nick-vi/opencode-type-inject@latest"
         "@different-ai/opencode-browser@latest"
       ];
-      
+
       # Model Context Protocol (MCP) servers
       mcp = {
         context7 = {
@@ -90,7 +90,7 @@ in {
           url = "https://mcp.grep.app";
         };
       };
-      
+
       # AI Provider configurations
       provider = {
         anthropic.options.setCacheKey = true;

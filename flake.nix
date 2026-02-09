@@ -16,7 +16,12 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       # Supported system architectures
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
       perSystem = {pkgs, ...}: let
         # Create a standalone Home Manager configuration
@@ -26,7 +31,7 @@
             ./default.nix
             {
               # Basic Home Manager setup
-              home.stateVersion = "24.05";
+              home.stateVersion = "25.11";
               home.username = "runner";
               home.homeDirectory = "/tmp/runner";
               modules.programs.opencode.enable = true;
@@ -48,11 +53,17 @@
 
         # Export the configured opencode package
         packages.default = opencode-wrapped;
+        packages.config = configFile;
 
         # Define runable applications
         apps.default = {
           type = "app";
           program = "${opencode-wrapped}/bin/opencode";
+        };
+
+        # Expose debugging attributes via legacyPackages
+        legacyPackages = {
+          inherit hmConfig configFile;
         };
       };
 

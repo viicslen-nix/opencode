@@ -69,6 +69,7 @@ in {
 
       # Installed plugins
       plugin = [
+        "oh-my-opencode@latest"
         "opencode-pty@latest"
         "opencode-antigravity-auth@latest"
         "@tarquinen/opencode-dcp@latest"

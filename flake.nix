@@ -23,47 +23,26 @@
         "x86_64-darwin"
       ];
 
-      perSystem = {pkgs, ...}: let
-        # Create a standalone Home Manager configuration
-        hmConfig = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./default.nix
-            {
-              # Basic Home Manager setup
-              home.stateVersion = "25.11";
-              home.username = "runner";
-              home.homeDirectory = "/tmp/runner";
-              modules.programs.opencode.enable = true;
-            }
-          ];
-        };
-
-        # Directly access the generated configuration file
-        configFile = hmConfig.config.xdg.configFile."opencode/opencode.json".source;
-
-        # Create a wrapper package that sets the OPENCODE_CONFIG env var
-        opencode-wrapped = pkgs.writeShellScriptBin "opencode" ''
-          export OPENCODE_CONFIG="${configFile}"
-          exec ${pkgs.opencode}/bin/opencode "$@"
-        '';
-      in {
+      perSystem = {lib, pkgs, config, ...}: {
         # Formatter for the flake code
         formatter = pkgs.alejandra;
 
         # Export the configured opencode package
-        packages.default = opencode-wrapped;
-        packages.config = configFile;
-
-        # Define runable applications
-        apps.default = {
-          type = "app";
-          program = "${opencode-wrapped}/bin/opencode";
+        packages = {
+          default = pkgs.callPackage ./packages/opencode.nix { inherit inputs; };
+          oh-my-opencode = pkgs.callPackage ./packages/oh-my-opencode.nix { inherit inputs; };
         };
 
-        # Expose debugging attributes via legacyPackages
-        legacyPackages = {
-          inherit hmConfig configFile;
+        # Define runable applications
+        apps = {
+          default = {
+            type = "app";
+            program = lib.getExe config.packages.default;
+          };
+          oh-my-opencode = {
+            type = "app";
+            program = lib.getExe config.packages.oh-my-opencode;
+          };
         };
       };
 

@@ -69,8 +69,12 @@ in {
 
       # Installed plugins
       plugin = [
+        # Auth
+        "opencode-gemini-auth@latest"
+        "opencode-antigravity-auth@latest"
+
+        # Utils
         "opencode-pty@latest"
-        "opencode-google-antigravity-auth@latest"
         "@tarquinen/opencode-dcp@latest"
         "opencode-websearch-cited@latest"
         "@mohak34/opencode-notifier@latest"
@@ -94,7 +98,6 @@ in {
       # AI Provider configurations
       provider = {
         anthropic.options.setCacheKey = true;
-        google.npm = "@ai-sdk/google";
       };
     };
     rules = ''

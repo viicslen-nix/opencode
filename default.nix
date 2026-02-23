@@ -70,7 +70,6 @@ in {
       # Installed plugins
       plugin = [
         # Auth
-        "opencode-gemini-auth@latest"
         "opencode-antigravity-auth@latest"
 
         # Utils
@@ -93,11 +92,6 @@ in {
           type = "remote";
           url = "https://mcp.grep.app";
         };
-      };
-
-      # AI Provider configurations
-      provider = {
-        anthropic.options.setCacheKey = true;
       };
     };
     rules = ''

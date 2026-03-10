@@ -23,14 +23,19 @@
         "x86_64-darwin"
       ];
 
-      perSystem = {lib, pkgs, config, ...}: {
+      perSystem = {
+        lib,
+        pkgs,
+        config,
+        ...
+      }: {
         # Formatter for the flake code
         formatter = pkgs.alejandra;
 
         # Export the configured opencode package
         packages = {
-          default = pkgs.callPackage ./packages/opencode.nix { inherit inputs; };
-          oh-my-opencode = pkgs.callPackage ./packages/oh-my-opencode.nix { inherit inputs; };
+          default = pkgs.callPackage ./packages/opencode.nix {inherit inputs;};
+          oh-my-opencode = pkgs.callPackage ./packages/oh-my-opencode.nix {inherit inputs;};
         };
 
         # Define runable applications

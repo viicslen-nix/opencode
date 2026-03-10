@@ -1,6 +1,8 @@
-{ pkgs, inputs, ... }:
-
-let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   inherit (pkgs) lib;
   hmConfig = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
@@ -20,26 +22,27 @@ let
 
   # Create installation commands for each file
   installCommands = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: file: ''
-    rel_path="${lib.removePrefix "opencode/" name}"
-    target="$CONFIG_DIR/$rel_path"
-    mkdir -p "$(dirname "$target")"
-    
-    # Only install if not present, to respect user modifications
-    if [ ! -f "$target" ]; then
-      cp "${file.source}" "$target"
-      chmod 644 "$target"
-      echo "Installed $rel_path"
-    fi
-  '') opencodeConfigFiles);
+      rel_path="${lib.removePrefix "opencode/" name}"
+      target="$CONFIG_DIR/$rel_path"
+      mkdir -p "$(dirname "$target")"
+
+      # Only install if not present, to respect user modifications
+      if [ ! -f "$target" ]; then
+        cp "${file.source}" "$target"
+        chmod 644 "$target"
+        echo "Installed $rel_path"
+      fi
+    '')
+    opencodeConfigFiles);
 in
-pkgs.writeShellScriptBin "opencode" ''
-  CONFIG_DIR="$HOME/.config/opencode"
+  pkgs.writeShellScriptBin "opencode" ''
+    CONFIG_DIR="$HOME/.config/opencode"
 
-  # Ensure the directory exists
-  mkdir -p "$CONFIG_DIR"
+    # Ensure the directory exists
+    mkdir -p "$CONFIG_DIR"
 
-  ${installCommands}
+    ${installCommands}
 
-  export OPENCODE_CONFIG_DIR="$CONFIG_DIR"
-  exec ${pkgs.opencode}/bin/opencode "$@"
-''
+    export OPENCODE_CONFIG_DIR="$CONFIG_DIR"
+    exec ${pkgs.opencode}/bin/opencode "$@"
+  ''

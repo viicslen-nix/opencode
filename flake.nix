@@ -5,6 +5,8 @@
   inputs = {
     # The main package repository
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # The Opencode application and related tools
+    opencode.url = "github:anomalyco/opencode";
     # Library for easier flake manipulation
     flake-parts.url = "github:hercules-ci/flake-parts";
     # Home Manager for user-environment configuration
@@ -25,10 +27,15 @@
 
       perSystem = {
         lib,
-        pkgs,
         config,
+        system,
         ...
-      }: {
+      }: let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [inputs.opencode.overlays.default];
+        };
+      in {
         # Formatter for the flake code
         formatter = pkgs.alejandra;
 
@@ -54,8 +61,14 @@
       flake = {
         # Export the module for use in other configurations
         homeManagerModules = {
-          default = ./default.nix;
-          opencode = ./default.nix;
+          default = {
+            imports = [./default.nix];
+            nixpkgs.overlays = [inputs.opencode.overlays.default];
+          };
+          opencode = {
+            imports = [./default.nix];
+            nixpkgs.overlays = [inputs.opencode.overlays.default];
+          };
         };
       };
     };

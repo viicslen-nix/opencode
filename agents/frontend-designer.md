@@ -4,7 +4,6 @@ model: github-copilot/gemini-3.1
 temperature: 0.7
 thinkingConfig:
   thinkingLevel: high
-mode: primary
 ---
 
 # Frontend Designer

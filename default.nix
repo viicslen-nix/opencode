@@ -39,6 +39,7 @@ in {
       security = ./agents/security.md;
       documentation = ./agents/documentation.md;
       assessment-review = ./agents/assessment-review.md;
+      frontend-designer = ./agents/frontend-designer.md;
     };
 
     # Configure available skills

@@ -34,6 +34,11 @@ in {
     # Configure available agents from local markdown files
     agents = {
       ask = ./agents/ask.md;
+      project-lead = ./agents/project-lead.md;
+      backend-developer = ./agents/backend-developer.md;
+      infrastructure-engineer = ./agents/infrastructure-engineer.md;
+      database-administrator = ./agents/database-administrator.md;
+      qa-engineer = ./agents/qa-engineer.md;
       debug = ./agents/debug.md;
       review = ./agents/review.md;
       security = ./agents/security.md;

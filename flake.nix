@@ -15,7 +15,31 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {flake-parts, ...}: let
+    nodeModulesHashOverrides = {
+      x86_64-linux = "sha256-I/I7YGrZPmnIPSh/BzvgAfQOMn90Jh3aFABVMqUn+Xw=";
+    };
+
+    opencodeOverlay = _final: prev: let
+      system = prev.stdenvNoCC.hostPlatform.system;
+      hash = nodeModulesHashOverrides.${system} or null;
+      rev =
+        if inputs.opencode ? shortRev
+        then inputs.opencode.shortRev
+        else if inputs.opencode ? rev
+        then builtins.substring 0 7 inputs.opencode.rev
+        else "dirty";
+    in
+      if hash == null
+      then {}
+      else {
+        opencode = prev.opencode.override {
+          node_modules = prev.callPackage "${inputs.opencode}/nix/node_modules.nix" {
+            inherit rev hash;
+          };
+        };
+      };
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       # Supported system architectures
       systems = [
@@ -33,7 +57,10 @@
       }: let
         pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [inputs.opencode.overlays.default];
+          overlays = [
+            inputs.opencode.overlays.default
+            opencodeOverlay
+          ];
         };
       in {
         # Formatter for the flake code
@@ -63,11 +90,17 @@
         homeManagerModules = {
           default = {
             imports = [./default.nix];
-            nixpkgs.overlays = [inputs.opencode.overlays.default];
+            nixpkgs.overlays = [
+              inputs.opencode.overlays.default
+              opencodeOverlay
+            ];
           };
           opencode = {
             imports = [./default.nix];
-            nixpkgs.overlays = [inputs.opencode.overlays.default];
+            nixpkgs.overlays = [
+              inputs.opencode.overlays.default
+              opencodeOverlay
+            ];
           };
         };
       };

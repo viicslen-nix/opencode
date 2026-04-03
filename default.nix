@@ -41,6 +41,7 @@ in {
       qa-engineer = ./agents/qa-engineer.md;
       debug = ./agents/debug.md;
       review = ./agents/review.md;
+      pr-review-fixer = ./agents/pr-review-fixer.md;
       security = ./agents/security.md;
       documentation = ./agents/documentation.md;
       assessment-review = ./agents/assessment-review.md;

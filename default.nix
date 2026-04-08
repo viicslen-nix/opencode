@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -27,7 +28,12 @@ in {
   };
 
   # Apply configuration if the module is enabled
-  config.programs.opencode = mkIf cfg.enable {
+  config = mkIf cfg.enable {
+    home.packages = [
+      (pkgs.callPackage ./packages/phpantom-lsp.nix {})
+    ];
+
+    programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
 
@@ -74,6 +80,18 @@ in {
         "**/vendor/**"
       ];
 
+      # Language Server Protocol configuration
+      lsp = {
+        # Disable built-in intelephense
+        "php intelephense".disabled = true;
+
+        # Use phpantom instead
+        phpantom = {
+          command = ["phpantom_lsp"];
+          extensions = [".php"];
+        };
+      };
+
       # Installed plugins
       plugin = [
         # Auth
@@ -101,6 +119,7 @@ in {
         };
       };
     };
+
     rules = ''
       ## Output Control
 
@@ -145,5 +164,6 @@ in {
       - If you are unsure how to do something, use `gh_grep` to search code examples from GitHub.
       - When you need to ask questions to the user, use the `question` tool.
     '';
+    };
   };
 }

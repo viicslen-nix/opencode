@@ -75,6 +75,12 @@
             ];
           };
         };
+
+        nixosModules = {
+          opencode-web = {
+            imports = [./nixos.nix];
+          };
+        };
       };
     };
 }

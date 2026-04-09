@@ -79,6 +79,9 @@
         nixosModules = {
           opencode-web = {
             imports = [./nixos.nix];
+            nixpkgs.overlays = [
+              inputs.opencode.overlays.default
+            ];
           };
         };
       };

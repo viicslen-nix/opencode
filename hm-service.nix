@@ -43,6 +43,7 @@ in {
           ExecStart = "${lib.getExe nixosCfg.package} web --hostname ${nixosCfg.host} --port ${toString nixosCfg.port}";
           Restart = "on-failure";
           RestartSec = "5s";
+          Environment = "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin:/run/wrappers/bin";
         }
         // optionalAttrs (cfg.environmentFile != null) {
           EnvironmentFile = cfg.environmentFile;

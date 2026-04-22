@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 with lib; let
@@ -83,7 +84,7 @@ in {
 
           # Use phpantom instead
           phpantom = {
-            command = ["${lib.getExe (pkgs.callPackage ./packages/phpantom-lsp.nix {})}"];
+            command = ["${lib.getExe inputs.packages.packages.${pkgs.system}.php.phpantom-lsp}"];
             extensions = [".php"];
           };
         };

@@ -5,6 +5,10 @@
   inputs = {
     # The main package repository
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    packages = {
+      url = "github:viicslen-nix/packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # The Opencode application and related tools
     opencode.url = "github:anomalyco/opencode";
     # Library for easier flake manipulation
@@ -84,6 +88,7 @@
         homeManagerModules = {
           default = {
             imports = [./default.nix];
+            _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
               opencodeBunCompatOverlay
@@ -91,6 +96,7 @@
           };
           opencode = {
             imports = [./default.nix];
+            _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
               opencodeBunCompatOverlay

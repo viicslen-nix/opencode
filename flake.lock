@@ -103,12 +103,33 @@
         "type": "github"
       }
     },
+    "packages": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776875212,
+        "narHash": "sha256-klg1nAwVFOapZOuuy2Buv+pAQSZAkwbDMgfei1wjzx4=",
+        "owner": "viicslen-nix",
+        "repo": "packages",
+        "rev": "cdefbc54c8f24d09c93ecb85d31f83b0c4495723",
+        "type": "github"
+      },
+      "original": {
+        "owner": "viicslen-nix",
+        "repo": "packages",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "opencode": "opencode"
+        "opencode": "opencode",
+        "packages": "packages"
       }
     }
   },

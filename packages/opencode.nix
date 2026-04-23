@@ -6,6 +6,9 @@
   inherit (pkgs) lib;
   hmConfig = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
     modules = [
       ../default.nix
       {

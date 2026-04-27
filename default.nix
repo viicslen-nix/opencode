@@ -114,6 +114,11 @@ in {
             type = "remote";
             url = "https://mcp.grep.app";
           };
+          mempalace = {
+            type = "local";
+            command = ["${lib.getExe' inputs.packages.packages.${pkgs.system}.python.mempalace "mempalace-mcp"}"];
+            enabled = true;
+          };
         };
       };
 

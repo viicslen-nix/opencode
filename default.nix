@@ -167,5 +167,7 @@ in {
         - When you need to ask questions to the user, use the `question` tool.
       '';
     };
+
+    xdg.configFile."opencode/dcp.jsonc".source = ./dcp.jsonc;
   };
 }

@@ -1,6 +1,7 @@
 ---
 description: Defines and executes validation strategy for feature and regression quality
 temperature: 0.1
+mode: subagent
 tools:
   write: false
   edit: false

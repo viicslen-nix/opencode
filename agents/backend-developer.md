@@ -1,6 +1,7 @@
 ---
 description: Implements backend APIs, domain logic, and server-side tests
 temperature: 0.3
+mode: subagent
 ---
 
 # Backend Developer

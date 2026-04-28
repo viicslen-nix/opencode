@@ -1,6 +1,7 @@
 ---
 description: Owns schema design, data integrity, migrations, and query performance
 temperature: 0.2
+mode: subagent
 ---
 
 # Database Administrator

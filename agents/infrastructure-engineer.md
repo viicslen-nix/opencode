@@ -1,6 +1,7 @@
 ---
 description: Manages infrastructure, deployment pipelines, and runtime reliability
 temperature: 0.2
+mode: subagent
 ---
 
 # Infrastructure Engineer

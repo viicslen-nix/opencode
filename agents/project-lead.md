@@ -1,6 +1,6 @@
 ---
 description: Plans delivery and delegates implementation work across specialist agents
-mode: primary
+mode: subagent
 temperature: 0.2
 ---
 

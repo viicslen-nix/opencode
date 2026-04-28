@@ -1,6 +1,7 @@
 ---
 description: Designs and implements polished front-end user experiences
 model: github-copilot/gemini-3.1
+mode: subagent
 temperature: 0.7
 thinkingConfig:
   thinkingLevel: high

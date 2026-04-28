@@ -1,7 +1,7 @@
 ---
 description: Reviews skill assessments for development candidates
 temperature: 0.1
-mode: primary
+mode: subagent
 permission:
   edit: deny
 tools:

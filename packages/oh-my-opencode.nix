@@ -10,7 +10,7 @@
       inherit inputs;
     };
     modules = [
-      ../default.nix
+      ../hmModules/default.nix
       {
         home.stateVersion = "25.11";
         home.username = "runner";

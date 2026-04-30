@@ -59,6 +59,6 @@ in {
     };
 
     # Inject the per-user HM module into every home-manager user
-    home-manager.sharedModules = [./hm-service.nix];
+    home-manager.sharedModules = [./hmModules/service.nix];
   };
 }

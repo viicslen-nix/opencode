@@ -87,7 +87,7 @@
         # Export the module for use in other configurations
         homeManagerModules = {
           default = {
-            imports = [./default.nix];
+            imports = [./hmModules/default.nix];
             _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
@@ -95,7 +95,7 @@
             ];
           };
           opencode = {
-            imports = [./default.nix];
+            imports = [./hmModules/default.nix];
             _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default

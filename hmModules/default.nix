@@ -11,6 +11,10 @@ with lib; let
 
   cfg = config.modules.${namespace}.${name};
 in {
+  imports = [
+    ./mempalace.nix
+  ];
+
   # Define the configuration options for this module
   options.modules.${namespace}.${name} = {
     enable = mkEnableOption (mdDoc name);
@@ -30,30 +34,32 @@ in {
 
   # Apply configuration if the module is enabled
   config = mkIf cfg.enable {
+    modules.programs.opencode.mempalace.enable = mkDefault true;
+
     programs.opencode = {
       enable = true;
       enableMcpIntegration = true;
 
       # Configure available agents from local markdown files
       agents = {
-        ask = ./agents/ask.md;
-        project-lead = ./agents/project-lead.md;
-        backend-developer = ./agents/backend-developer.md;
-        infrastructure-engineer = ./agents/infrastructure-engineer.md;
-        database-administrator = ./agents/database-administrator.md;
-        qa-engineer = ./agents/qa-engineer.md;
-        debug = ./agents/debug.md;
-        review = ./agents/review.md;
-        pr-review-fixer = ./agents/pr-review-fixer.md;
-        security = ./agents/security.md;
-        documentation = ./agents/documentation.md;
-        assessment-review = ./agents/assessment-review.md;
-        frontend-designer = ./agents/frontend-designer.md;
+        ask = ../agents/ask.md;
+        project-lead = ../agents/project-lead.md;
+        backend-developer = ../agents/backend-developer.md;
+        infrastructure-engineer = ../agents/infrastructure-engineer.md;
+        database-administrator = ../agents/database-administrator.md;
+        qa-engineer = ../agents/qa-engineer.md;
+        debug = ../agents/debug.md;
+        review = ../agents/review.md;
+        pr-review-fixer = ../agents/pr-review-fixer.md;
+        security = ../agents/security.md;
+        documentation = ../agents/documentation.md;
+        assessment-review = ../agents/assessment-review.md;
+        frontend-designer = ../agents/frontend-designer.md;
       };
 
       # Configure available skills
       skills = {
-        browser-automation = ./skills/browser-automation.md;
+        browser-automation = ../skills/browser-automation.md;
       };
 
       # Main Opencode settings
@@ -114,11 +120,6 @@ in {
             type = "remote";
             url = "https://mcp.grep.app";
           };
-          mempalace = {
-            type = "local";
-            command = ["${lib.getExe' inputs.packages.packages.${pkgs.system}.python.mempalace "mempalace-mcp"}"];
-            enabled = true;
-          };
         };
       };
 
@@ -168,6 +169,6 @@ in {
       '';
     };
 
-    xdg.configFile."opencode/dcp.jsonc".source = ./dcp.jsonc;
+    xdg.configFile."opencode/dcp.jsonc".source = ../dcp.jsonc;
   };
 }

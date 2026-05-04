@@ -151,6 +151,14 @@ in {
         - Reserve detailed explanations for errors or explicit requests
         - Focus on what the user needs to know, not what you did
 
+        ## Failed Fixes and Rollback
+
+        - If you make a change and it is later confirmed by you or by the user not to work, do NOT keep iterating on top of that failed change by default.
+        - First evaluate whether the failed change should be rolled back before attempting another fix.
+        - Prefer rolling back failed changes when keeping them would compound confusion, risk, or technical debt.
+        - If you decide not to roll back a failed change, explicitly state why keeping it is the better path before proceeding.
+        - Avoid stacking speculative fixes on top of other speculative fixes without first reassessing the last unsuccessful change.
+
         ## External File Loading
 
         CRITICAL: When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.

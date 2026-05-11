@@ -27,11 +27,11 @@ in {
       };
 
       commands = {
-        help = ../commands/mempalace/help.md;
-        init = ../commands/mempalace/init.md;
-        mine = ../commands/mempalace/mine.md;
-        search = ../commands/mempalace/search.md;
-        status = ../commands/mempalace/status.md;
+        mempalace-help = ../commands/mempalace/help.md;
+        mempalace-init = ../commands/mempalace/init.md;
+        mempalace-mine = ../commands/mempalace/mine.md;
+        mempalace-search = ../commands/mempalace/search.md;
+        mempalace-status = ../commands/mempalace/status.md;
       };
 
       settings.mcp = {

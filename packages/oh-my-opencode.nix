@@ -4,6 +4,7 @@
   ...
 }: let
   inherit (pkgs) lib;
+  opencodePackage = inputs.opencode.packages.${pkgs.system}.default;
   hmConfigOhMy = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
     extraSpecialArgs = {
@@ -61,5 +62,5 @@ in
     ${installCommands}
 
     export OPENCODE_CONFIG_DIR="$CONFIG_DIR"
-    exec ${pkgs.opencode}/bin/opencode "$@"
+    exec ${opencodePackage}/bin/opencode "$@"
   ''

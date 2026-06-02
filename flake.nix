@@ -27,7 +27,7 @@
           + ''
             if [ -f packages/script/src/index.ts ]; then
               substituteInPlace packages/script/src/index.ts \
-                --replace 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.11"'
+                --replace 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.13"'
             fi
 
             if [ -f packages/opencode/src/cli/cmd/generate.ts ]; then

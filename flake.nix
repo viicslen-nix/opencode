@@ -10,7 +10,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # The Opencode application and related tools
-    opencode.url = "github:anomalyco/opencode";
+    opencode = {
+      url = "github:anomalyco/opencode/f06b78751e08ca38dc50da7f7ca1c408e6ad6298";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Library for easier flake manipulation
     flake-parts.url = "github:hercules-ci/flake-parts";
     # Home Manager for user-environment configuration
@@ -25,11 +28,6 @@
         postPatch =
           (old.postPatch or "")
           + ''
-            if [ -f packages/script/src/index.ts ]; then
-              substituteInPlace packages/script/src/index.ts \
-                --replace 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.13"'
-            fi
-
             if [ -f packages/opencode/src/cli/cmd/generate.ts ]; then
               substituteInPlace packages/opencode/src/cli/cmd/generate.ts \
                 --replace 'const prettier = await import("prettier")' 'const prettier = await import(process.env.OPENCODE_PRETTIER_PACKAGE ?? "prettier")' \
@@ -72,7 +70,7 @@
           oh-my-opencode = pkgs.callPackage ./packages/oh-my-opencode.nix {inherit inputs;};
         };
 
-        # Define runable applications
+        # Define runnable applications
         apps = {
           default = {
             type = "app";

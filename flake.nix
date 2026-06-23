@@ -11,7 +11,7 @@
     };
     # The Opencode application and related tools
     opencode = {
-      url = "github:anomalyco/opencode/f06b78751e08ca38dc50da7f7ca1c408e6ad6298";
+      url = "github:anomalyco/opencode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Library for easier flake manipulation
@@ -22,22 +22,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ {flake-parts, ...}: let
-    opencodeBunCompatOverlay = final: prev: {
-      opencode = prev.opencode.overrideAttrs (old: {
-        postPatch =
-          (old.postPatch or "")
-          + ''
-            if [ -f packages/opencode/src/cli/cmd/generate.ts ]; then
-              substituteInPlace packages/opencode/src/cli/cmd/generate.ts \
-                --replace 'const prettier = await import("prettier")' 'const prettier = await import(process.env.OPENCODE_PRETTIER_PACKAGE ?? "prettier")' \
-                --replace 'const babel = await import("prettier/plugins/babel")' 'const babel = await import(process.env.OPENCODE_PRETTIER_BABEL_PLUGIN ?? "prettier/plugins/babel")' \
-                --replace 'const estree = await import("prettier/plugins/estree")' 'const estree = await import(process.env.OPENCODE_PRETTIER_ESTREE_PLUGIN ?? "prettier/plugins/estree")'
-            fi
-          '';
-      });
-    };
-  in
+  outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       # Supported system architectures
       systems = [
@@ -57,7 +42,6 @@
           inherit system;
           overlays = [
             inputs.opencode.overlays.default
-            opencodeBunCompatOverlay
           ];
         };
       in {
@@ -91,7 +75,6 @@
             _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
-              opencodeBunCompatOverlay
             ];
           };
           opencode = {
@@ -99,7 +82,6 @@
             _module.args.inputs = inputs;
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
-              opencodeBunCompatOverlay
             ];
           };
         };
@@ -109,7 +91,6 @@
             imports = [./nixos.nix];
             nixpkgs.overlays = [
               inputs.opencode.overlays.default
-              opencodeBunCompatOverlay
             ];
           };
         };

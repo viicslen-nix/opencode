@@ -38,18 +38,11 @@ in {
       # Configure available agents from local markdown files
       agents = {
         ask = ../agents/ask.md;
-        project-lead = ../agents/project-lead.md;
-        backend-developer = ../agents/backend-developer.md;
-        infrastructure-engineer = ../agents/infrastructure-engineer.md;
-        database-administrator = ../agents/database-administrator.md;
-        qa-engineer = ../agents/qa-engineer.md;
         debug = ../agents/debug.md;
         review = ../agents/review.md;
-        pr-review-fixer = ../agents/pr-review-fixer.md;
         security = ../agents/security.md;
         documentation = ../agents/documentation.md;
-        assessment-review = ../agents/assessment-review.md;
-        frontend-designer = ../agents/frontend-designer.md;
+        pr-review-fixer = ../agents/pr-review-fixer.md;
       };
 
       # Configure available skills

@@ -73,16 +73,10 @@
           default = {
             imports = [./hmModules/default.nix];
             _module.args.inputs = inputs;
-            nixpkgs.overlays = [
-              inputs.opencode.overlays.default
-            ];
           };
           opencode = {
             imports = [./hmModules/default.nix];
             _module.args.inputs = inputs;
-            nixpkgs.overlays = [
-              inputs.opencode.overlays.default
-            ];
           };
         };
 

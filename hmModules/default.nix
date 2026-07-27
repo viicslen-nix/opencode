@@ -32,7 +32,7 @@ in {
   config = mkIf cfg.enable {
     programs.opencode = {
       enable = true;
-      package = inputs.opencode.packages.${pkgs.system}.default;
+      package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
       enableMcpIntegration = true;
 
       # Configure available agents from local markdown files
@@ -78,7 +78,7 @@ in {
 
           # Use phpantom instead
           phpantom = {
-            command = ["${lib.getExe inputs.packages.packages.${pkgs.system}.php.phpantom-lsp}"];
+            command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp}"];
             extensions = [".php"];
           };
         };

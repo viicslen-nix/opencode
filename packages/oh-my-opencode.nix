@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (pkgs) lib;
-  opencodePackage = inputs.opencode.packages.${pkgs.system}.default;
+  opencodePackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
   hmConfigOhMy = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
     extraSpecialArgs = {

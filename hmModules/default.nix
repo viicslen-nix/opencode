@@ -81,6 +81,12 @@ in {
             command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp}"];
             extensions = [".php"];
           };
+
+          # Laravel framework-aware LSP, alongside phpantom
+          laravel = {
+            command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.laravel-lsp}"];
+            extensions = [".php" ".blade.php"];
+          };
         };
 
         # Installed plugins

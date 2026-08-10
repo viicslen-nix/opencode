@@ -15,6 +15,8 @@ in {
   options.modules.${namespace}.${name} = {
     enable = mkEnableOption (mdDoc name);
 
+    phpantom.enable = mkEnableOption (mdDoc "the phpantom PHP language server");
+
     model = mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -72,22 +74,20 @@ in {
         ];
 
         # Language Server Protocol configuration
-        lsp = {
-          # Disable built-in intelephense
-          "php intelephense".disabled = true;
-
-          # Use phpantom instead
-          phpantom = {
-            command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp}"];
-            extensions = [".php"];
+        lsp =
+          {
+            laravel = {
+              command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.laravel-lsp}"];
+              extensions = [".php" ".blade.php"];
+            };
+          }
+          // optionalAttrs cfg.phpantom.enable {
+            "php intelephense".disabled = true;
+            phpantom = {
+              command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp}"];
+              extensions = [".php"];
+            };
           };
-
-          # Laravel framework-aware LSP, alongside phpantom
-          laravel = {
-            command = ["${lib.getExe inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.laravel-lsp}"];
-            extensions = [".php" ".blade.php"];
-          };
-        };
 
         # Installed plugins
         plugin = [

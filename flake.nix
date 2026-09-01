@@ -16,13 +16,20 @@
     };
     # Library for easier flake manipulation
     flake-parts.url = "github:hercules-ci/flake-parts";
-    # Home Manager for user-environment configuration
-    home-manager.url = "github:nix-community/home-manager";
-    # Ensure home-manager uses the same nixpkgs version as this flake
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # home-manager is reached through omniflake's index rather than carrying an
+    # input of its own; see the `inputs` binding in `outputs` below. Consumers
+    # should point this at their own omniflake so only one copy is locked.
+    omniflake = {
+      url = "github:fzakaria/omniflake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = rawInputs @ {flake-parts, ...}: let
+    # home-manager under its old name, so every `inputs.home-manager` below —
+    # the two packages and `_module.args.inputs` — is unchanged.
+    inputs = rawInputs // {home-manager = rawInputs.omniflake.flakes.home-manager;};
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       # Supported system architectures
       systems = [

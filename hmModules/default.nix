@@ -93,6 +93,7 @@ in {
         plugin = [
           # Auth
           "opencode-antigravity-auth@latest"
+          "opencode-claude-auth@latest"
 
           # Utils
           "opencode-pty@latest"

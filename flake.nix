@@ -85,6 +85,10 @@
             imports = [./hmModules/default.nix];
             _module.args.inputs = inputs;
           };
+          opencode2 = {
+            imports = [./hmModules/opencode2.nix];
+            _module.args.inputs = inputs;
+          };
         };
 
         nixosModules = {
